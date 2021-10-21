@@ -116,8 +116,9 @@
 </body>
 <script>
 
-    // Set timer for input
     let input = document.getElementById("numberInput");
+
+    /* Automatic key input
     let timeOut = null;
 
     input.addEventListener("keyup", function() {
@@ -125,6 +126,15 @@
         timeOut = setTimeout(function() {
             refreshStats();
         }, 1500);
+    }); */
+
+    // Detect if return is pressed
+    input.addEventListener("keydown", function onEvent(event) {
+        if (event.key === "Enter") {
+            event.preventDefault();
+            refreshStats();
+            return false;
+        }
     });
 
     let totalStock = 120;
@@ -155,7 +165,7 @@
         // Correct number if it doesn't match steps
         if (checkIfValueDoesNotMatchStep(inputValue) && inputValue !== "") {
             console.log("Not correct step!");
-            showNotification("Tuotetta myydään " + stepLeap + " erissä. Määrä korjattu lähimpään erään.");
+            showNotification("Tuotetta myydään vain " + stepLeap + " erissä. Määrä korjattu lähimpään erään.");
             // Loop through steps
             for (let i = 0; i < steps; i++) {
                 // Catch the first step the input value exceeds
