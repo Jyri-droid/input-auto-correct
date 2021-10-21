@@ -141,14 +141,15 @@
     let stockPrice = 50;
     let steps = 6;
     let stepLeap = totalStock / steps;
-
+    let notificationElement = document.getElementById("notification");
+    let inputElement = document.getElementById("numberInput");
 
     function refreshStats() {
-        let inputValue = document.getElementById("numberInput").value;
+        let inputValue = inputElement.value;
 
         // Correct number if it's too high
         if (inputValue > totalStock) {
-            document.getElementById("numberInput").value = totalStock;
+            inputElement.value = totalStock;
             countStats(totalStock);
             showNotification("Voit ostaa enimmillään " + totalStock + " tuotetta");
             return;
@@ -156,7 +157,7 @@
 
         // Correct number if it's too low
         if (inputValue <= 0 && inputValue !=="") {
-            document.getElementById("numberInput").value = 1;
+            inputElement.value = 1;
             countStats(1);
             showNotification("Yksi on pienin määrä");
             return;
@@ -174,10 +175,10 @@
                     let middleOfStep = ((stepLeap * i) + (stepLeap * (i + 1))) / 2;
                     // Check if input value is bigger than middle of step
                     if (inputValue >= middleOfStep) {
-                        document.getElementById("numberInput").value = stepLeap * (i + 1);
+                        inputElement.value = stepLeap * (i + 1);
                         countStats(stepLeap * (i + 1));
                     } else {
-                        document.getElementById("numberInput").value = stepLeap * (i);
+                        inputElement.value = stepLeap * (i);
                         countStats(stepLeap * (i));
                     }
                     
@@ -193,7 +194,7 @@
         }
 
         // Hide notification if it's already showing
-        if (document.getElementById("notification").style.opacity !== 0) {
+        if (notificationElement.style.opacity !== 0) {
             hideNotification();
         }
 
@@ -201,13 +202,12 @@
     }
 
     function showNotification(text) {
-        let notification = document.getElementById("notification");
         document.getElementById("notificationText").innerHTML = text;
-        notification.style.opacity = 1;
+        notificationElement.style.opacity = 1;
     }
 
     function hideNotification() {
-        document.getElementById("notification").style.opacity = 0;
+        notificationElement.style.opacity = 0;
     }
 
     function countStats(value) {
