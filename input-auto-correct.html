@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>Testing input auto correct</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Work+Sans&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<style>
+
+	* {
+		margin: 0;
+		padding: 0;
+		box-sizing: border-box;
+        font-family: 'Work Sans', sans-serif;
+        font-weight: 300;
+        font-size: 16px;
+        color: lightgrey;
+	}
+
+    body {
+		background-color: black;
+        margin-top: 2rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+
+    .divider {
+        width: 100%;
+        height: 1px;
+        background-color: white;
+        opacity: .2;
+        margin: 1rem 0 1rem 0;
+    }
+	
+    label {
+        margin-right: 0.5rem;
+    }
+
+    input {
+        height: 3rem;
+        padding: 1rem;
+        color: black;
+    }
+
+    input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+    }
+
+    ::placeholder {
+        color: lightgrey;
+    }
+
+    input:focus {
+        border: solid 2px orangered;
+        outline: none;
+        border-radius: 2px;
+    }
+
+    .loud {
+        font-size: 3rem;
+        margin: 0;
+    }
+
+    .orange {
+        color: orangered;
+    }
+
+    .inputNotification {
+        margin: 1rem 0 0 0;
+        color: white;
+        height: 2rem;
+        display: flex;
+        transition: opacity .5s;
+    }
+
+    .material-icons {
+        font-family: "Material Icons";
+        font-weight: normal;
+        font-style: normal;
+        line-height: 1rem;
+        font-size: 1.5rem;
+        color: lightskyblue;
+    }
+
+    #notificationText {
+        margin-top: .1rem;
+        line-height: 1rem;
+        color: lightskyblue;
+    }
+
+	
+</style>
+
+</head>
+<body>
+
+    <form action="">
+        <label for="numberInput">Kuinka monta tuotetta haluat ostaa?</label>
+        <input type="number" placeholder="Syötä luku" id="numberInput" name="numberInput" autofocus></input><span style="margin-left:0.75rem;">kpl</span>
+    </form>
+    <div class="inputNotification" id="notification" style="opacity:0;">
+        <span class="material-icons">info</span>&nbsp;<span id="notificationText"></span>
+    </div>
+    <div class="divider"></div>
+    <p>Tuotteita jäljellä varastossa</p>
+    <p class="loud" id="stockLeft">120</p>
+    <div class="divider"></div>
+    <p>Tuotteen hinta&nbsp;/&nbsp;kpl</p>
+    <p class="loud">50&nbsp;&euro;</p>
+    <div class="divider"></div>
+    <p>Hinta yhteensä</p>
+    <p class="loud orange" id="totalPrice">0&nbsp;&euro;</p>
+</body>
+<script>
+
+    // Set timer for input
+    let input = document.getElementById("numberInput");
+    let timeOut = null;
+
+    input.addEventListener("keyup", function() {
+        clearTimeout(timeOut);
+        timeOut = setTimeout(function() {
+            refreshStats();
+        }, 1500);
+    });
+
+    let totalStock = 120;
+    let stockPrice = 50;
+    let steps = 6;
+    let stepLeap = totalStock / steps;
+
+
+    function refreshStats() {
+        let inputValue = document.getElementById("numberInput").value;
+
+        // Correct number if it's too high
+        if (inputValue > totalStock) {
+            document.getElementById("numberInput").value = totalStock;
+            countStats(totalStock);
+            showNotification("Voit ostaa enimmillään " + totalStock + " tuotetta");
+            return;
+        }
+
+        // Correct number if it's too low
+        if (inputValue <= 0 && inputValue !=="") {
+            document.getElementById("numberInput").value = 1;
+            countStats(1);
+            showNotification("Yksi on pienin määrä");
+            return;
+        }
+
+        // Correct number if it doesn't match steps
+        if (checkIfValueDoesNotMatchStep(inputValue) && inputValue !== "") {
+            console.log("Not correct step!");
+            showNotification("Tuotteita myydään vain " + stepLeap + " erissä. Määrä korjattu lähimpään erän kokoon.");
+            // Loop through steps
+            for (let i = 0; i < steps; i++) {
+                // Catch the first step the input value exceeds
+                if (inputValue > stepLeap * i) {
+                    // Count the middle of a step
+                    let middleOfStep = ((stepLeap * i) + (stepLeap * (i + 1))) / 2;
+                    // Check if input value is bigger than middle of step
+                    if (inputValue >= middleOfStep) {
+                        document.getElementById("numberInput").value = stepLeap * (i + 1);
+                        countStats(stepLeap * (i + 1));
+                    } else {
+                        document.getElementById("numberInput").value = stepLeap * (i);
+                        countStats(stepLeap * (i));
+                    }
+                    
+                }
+            }
+            return;
+        }
+
+        // Hide notification and stop function if input is cleared
+        if (inputValue == "") {
+            hideNotification();
+            return;
+        }
+
+        // Hide notification if it's already showing
+        if (document.getElementById("notification").style.opacity !== 0) {
+            hideNotification();
+        }
+
+        countStats(inputValue);
+    }
+
+    function showNotification(text) {
+        document.getElementById("notificationText").innerHTML = text;
+        document.getElementById("notification").style.opacity = 1;
+    }
+
+    function hideNotification() {
+        document.getElementById("notification").style.opacity = 0;
+    }
+
+    function countStats(value) {
+        document.getElementById("stockLeft").innerHTML = totalStock - value;
+        document.getElementById("totalPrice").innerHTML = value * stockPrice + " €";
+    }
+
+    function checkIfValueDoesNotMatchStep(value) {
+        for (let i = 0; i < steps; i++) {
+            if (stepLeap * i == value) {
+                console.log("Correct step!");
+                return false;
+            }
+        }
+        return true;
+    }
+
+</script>
+</html>
