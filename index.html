@@ -201,8 +201,9 @@
     }
 
     function showNotification(text) {
+        let notification = document.getElementById("notification");
         document.getElementById("notificationText").innerHTML = text;
-        document.getElementById("notification").style.opacity = 1;
+        notification.style.opacity = 1;
     }
 
     function hideNotification() {
