@@ -155,7 +155,7 @@
         // Correct number if it doesn't match steps
         if (checkIfValueDoesNotMatchStep(inputValue) && inputValue !== "") {
             console.log("Not correct step!");
-            showNotification("Tuotteita myydään vain " + stepLeap + " erissä. Määrä korjattu lähimpään erän kokoon.");
+            showNotification("Tuotetta myydään " + stepLeap + " erissä. Määrä korjattu lähimpään erään.");
             // Loop through steps
             for (let i = 0; i < steps; i++) {
                 // Catch the first step the input value exceeds
