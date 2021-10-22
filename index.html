@@ -131,6 +131,7 @@
     // Detect if return is pressed
     input.addEventListener("keydown", function onEvent(event) {
         if (event.key === "Enter") {
+            console.log("Enter pressed on input");
             event.preventDefault();
             refreshStats();
             return false;
@@ -149,6 +150,7 @@
 
         // Correct number if it's too high
         if (inputValue > totalStock) {
+            console.log("Number is too high");
             inputElement.value = totalStock;
             countStats(totalStock);
             showNotification("Voit ostaa enimmillään " + totalStock + " tuotetta");
@@ -157,6 +159,7 @@
 
         // Correct number if it's too low
         if (inputValue <= 0 && inputValue !=="") {
+            console.log("Number is too low");
             inputElement.value = 1;
             countStats(1);
             showNotification("Yksi on pienin määrä");
@@ -165,7 +168,7 @@
 
         // Correct number if it doesn't match steps
         if (checkIfValueDoesNotMatchStep(inputValue) && inputValue !== "") {
-            console.log("Not correct step!");
+            console.log("Number does not match steps");
             showNotification("Tuotetta myydään vain " + stepLeap + " erissä. Määrä korjattu lähimpään erään.");
             // Loop through steps
             for (let i = 0; i < steps; i++) {
@@ -188,12 +191,14 @@
 
         // Hide notification and stop function if input is cleared
         if (inputValue == "") {
+            console.log("Input is cleared");
             hideNotification();
             return;
         }
 
-        // Hide notification if it's already showing
+        // Number is good but notification is showing, hide it
         if (notificationElement.style.opacity !== 0) {
+            console.log("Notification was showing but now it's hidden");
             hideNotification();
         }
 
@@ -201,11 +206,24 @@
     }
 
     function showNotification(text) {
-        document.getElementById("notificationText").innerHTML = text;
-        notificationElement.style.opacity = 1;
+        console.log("Notification is shown");
+        if (notificationElement.style.opacity == 0) {
+            console.log("Notification was hidden");
+            document.getElementById("notificationText").innerHTML = text;
+            notificationElement.style.opacity = 1;
+        } else {
+            console.log("Notification was shown");
+            notificationElement.style.opacity = .5;
+            setTimeout(function() {
+                document.getElementById("notificationText").innerHTML = text;
+                notificationElement.style.opacity = 1;
+            }, 200);
+        }
+
     }
 
     function hideNotification() {
+        console.log("Notification is hidden");
         notificationElement.style.opacity = 0;
     }
 
