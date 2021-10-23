@@ -50,13 +50,12 @@ function refreshStats() {
                     inputElement.value = stepLeap * (i + 1);
                     countStats(stepLeap * (i + 1));
                 } else {
-                    inputElement.value = stepLeap * (i);
-                    countStats(stepLeap * (i));
+                    inputElement.value = stepLeap * i;
+                    countStats(stepLeap * i);
                 }  
             }
-            return;
         }
-
+        return;
     }
 
     // Hide notification and stop function if input is cleared
