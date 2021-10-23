@@ -54,8 +54,9 @@ function refreshStats() {
                     countStats(stepLeap * (i));
                 }  
             }
+            return;
         }
-        return;
+
     }
 
     // Hide notification and stop function if input is cleared
@@ -77,11 +78,11 @@ function refreshStats() {
 function showNotification(text) {
     console.log("Notification is shown");
     if (notificationElement.style.opacity == 0) {
-        console.log("Notification was hidden");
+        console.log("Previous notification was hidden");
         document.getElementById("notificationText").innerHTML = text;
         notificationElement.style.opacity = 1;
     } else {
-        console.log("Notification was shown");
+        console.log("Previous notification was shown");
         notificationElement.style.opacity = .5;
         setTimeout(function() {
             document.getElementById("notificationText").innerHTML = text;
