@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
 	<title>Testing input auto correct</title>
+    <meta name="author" content="Jyri Konttinen">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Work+Sans&display=swap" rel="stylesheet">
@@ -116,20 +117,14 @@
 </body>
 <script>
 
-    let input = document.getElementById("numberInput");
+    let totalStock = 120;
+    let stockPrice = 50;
+    let steps = 6;
+    let stepLeap = totalStock / steps;
+    let notificationElement = document.getElementById("notification");
+    let inputElement = document.getElementById("numberInput");
 
-    /* Automatic key input
-    let timeOut = null;
-
-    input.addEventListener("keyup", function() {
-        clearTimeout(timeOut);
-        timeOut = setTimeout(function() {
-            refreshStats();
-        }, 1500);
-    }); */
-
-    // Detect if return is pressed
-    input.addEventListener("keydown", function onEvent(event) {
+    inputElement.addEventListener("keydown", function onEvent(event) {
         if (event.key === "Enter") {
             console.log("Enter pressed on input");
             event.preventDefault();
@@ -137,13 +132,6 @@
             return false;
         }
     });
-
-    let totalStock = 120;
-    let stockPrice = 50;
-    let steps = 6;
-    let stepLeap = totalStock / steps;
-    let notificationElement = document.getElementById("notification");
-    let inputElement = document.getElementById("numberInput");
 
     function refreshStats() {
         let inputValue = inputElement.value;
