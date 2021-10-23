@@ -3,232 +3,30 @@
 <head>
 	<title>Testing input auto correct</title>
     <meta name="author" content="Jyri Konttinen">
+    <link rel="stylesheet" type="text/css" href="styles.css" media="screen"/>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Work+Sans&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-<style>
-
-	* {
-		margin: 0;
-		padding: 0;
-		box-sizing: border-box;
-        font-family: 'Work Sans', sans-serif;
-        font-weight: 300;
-        font-size: 16px;
-        color: lightgrey;
-	}
-
-    body {
-		background-color: black;
-        margin-top: 2rem;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-    }
-
-
-    .divider {
-        width: 100%;
-        height: 1px;
-        background-color: white;
-        opacity: .2;
-        margin: 1rem 0 1rem 0;
-    }
-	
-    label {
-        margin-right: 0.5rem;
-    }
-
-    input {
-        height: 3rem;
-        padding: 1rem;
-        color: black;
-    }
-
-    input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
-        -webkit-appearance: none;
-    }
-
-    ::placeholder {
-        color: lightgrey;
-    }
-
-    input:focus {
-        border: solid 2px orangered;
-        outline: none;
-        border-radius: 2px;
-    }
-
-    .loud {
-        font-size: 3rem;
-        margin: 0;
-    }
-
-    .orange {
-        color: orangered;
-    }
-
-    .inputNotification {
-        margin: 1rem 0 0 0;
-        color: white;
-        height: 2rem;
-        display: flex;
-        transition: opacity .5s;
-    }
-
-    .material-icons {
-        font-family: "Material Icons";
-        font-weight: normal;
-        font-style: normal;
-        line-height: 1rem;
-        font-size: 1.5rem;
-        color: lightskyblue;
-    }
-
-    #notificationText {
-        margin-top: .1rem;
-        line-height: 1rem;
-        color: lightskyblue;
-    }
-
-	
-</style>
-
 </head>
 <body>
 
     <form action="">
-        <label for="numberInput">Kuinka monta tuotetta haluat ostaa?</label>
-        <input type="number" placeholder="Syötä luku" id="numberInput" name="numberInput" autofocus></input><span style="margin-left:0.75rem;">kpl</span>
+        <label for="numberInput">How many items would you like to buy?</label>
+        <input type="number" placeholder="Enter number" id="numberInput" name="numberInput" autofocus></input><span style="margin-left:0.75rem;">pcs</span>
     </form>
     <div class="inputNotification" id="notification" style="opacity:0;">
         <span class="material-icons">info</span>&nbsp;<span id="notificationText"></span>
     </div>
     <div class="divider"></div>
-    <p>Tuotteita jäljellä varastossa</p>
+    <p>Items left</p>
     <p class="loud" id="stockLeft">120</p>
     <div class="divider"></div>
-    <p>Tuotteen hinta&nbsp;/&nbsp;kpl</p>
+    <p>Price per item</p>
     <p class="loud">50&nbsp;&euro;</p>
     <div class="divider"></div>
-    <p>Hinta yhteensä</p>
-    <p class="loud orange" id="totalPrice">0&nbsp;&euro;</p>
+    <p>Total price</p>
+    <p class="loud orange" id="totalPrice">0 &euro;</p>
 </body>
-<script>
-
-    let totalStock = 120;
-    let stockPrice = 50;
-    let steps = 6;
-    let stepLeap = totalStock / steps;
-    let notificationElement = document.getElementById("notification");
-    let inputElement = document.getElementById("numberInput");
-
-    inputElement.addEventListener("keydown", function onEvent(event) {
-        if (event.key === "Enter") {
-            console.log("Enter pressed on input");
-            event.preventDefault();
-            refreshStats();
-            return false;
-        }
-    });
-
-    function refreshStats() {
-        let inputValue = inputElement.value;
-
-        // Correct number if it's too high
-        if (inputValue > totalStock) {
-            console.log("Number is too high");
-            inputElement.value = totalStock;
-            countStats(totalStock);
-            showNotification("Voit ostaa enimmillään " + totalStock + " tuotetta");
-            return;
-        }
-
-        // Correct number if it's too low
-        if (inputValue <= 0 && inputValue !=="") {
-            console.log("Number is too low");
-            inputElement.value = 1;
-            countStats(1);
-            showNotification("Yksi on pienin määrä");
-            return;
-        }
-
-        // Correct number if it doesn't match steps
-        if (checkIfValueDoesNotMatchStep(inputValue) && inputValue !== "") {
-            console.log("Number does not match steps");
-            showNotification("Tuotetta myydään vain " + stepLeap + " erissä. Määrä korjattu lähimpään erään.");
-            // Loop through steps
-            for (let i = 0; i < steps; i++) {
-                // Catch the first step the input value exceeds
-                if (inputValue > stepLeap * i) {
-                    // Count the middle of a step
-                    let middleOfStep = ((stepLeap * i) + (stepLeap * (i + 1))) / 2;
-                    // Check if input value is bigger than middle of step
-                    if (inputValue >= middleOfStep) {
-                        inputElement.value = stepLeap * (i + 1);
-                        countStats(stepLeap * (i + 1));
-                    } else {
-                        inputElement.value = stepLeap * (i);
-                        countStats(stepLeap * (i));
-                    }  
-                }
-            }
-            return;
-        }
-
-        // Hide notification and stop function if input is cleared
-        if (inputValue == "") {
-            console.log("Input is cleared");
-            hideNotification();
-            return;
-        }
-
-        // Number is good but notification is showing, hide it
-        if (notificationElement.style.opacity !== 0) {
-            console.log("Notification was showing but now it's hidden");
-            hideNotification();
-        }
-
-        countStats(inputValue);
-    }
-
-    function showNotification(text) {
-        console.log("Notification is shown");
-        if (notificationElement.style.opacity == 0) {
-            console.log("Notification was hidden");
-            document.getElementById("notificationText").innerHTML = text;
-            notificationElement.style.opacity = 1;
-        } else {
-            console.log("Notification was shown");
-            notificationElement.style.opacity = .5;
-            setTimeout(function() {
-                document.getElementById("notificationText").innerHTML = text;
-                notificationElement.style.opacity = 1;
-            }, 200);
-        }
-
-    }
-
-    function hideNotification() {
-        console.log("Notification is hidden");
-        notificationElement.style.opacity = 0;
-    }
-
-    function countStats(value) {
-        document.getElementById("stockLeft").innerHTML = totalStock - value;
-        document.getElementById("totalPrice").innerHTML = value * stockPrice + " €";
-    }
-
-    function checkIfValueDoesNotMatchStep(value) {
-        for (let i = 0; i < steps; i++) {
-            if (stepLeap * i == value) {
-                console.log("Correct step!");
-                return false;
-            }
-        }
-        return true;
-    }
-
-</script>
+<script src="scripts.js"></script>
 </html>
