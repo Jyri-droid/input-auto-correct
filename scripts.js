@@ -102,8 +102,8 @@ function countStats(value) {
 }
 
 function checkIfValueDoesNotMatchStep(value) {
-    for (let i = 0; i < steps; i++) {
-        if (stepLeap * i == value) {
+    for (let j = 0; j < steps; j++) {
+        if (stepLeap * j == value) {
             console.log("Correct step!");
             return false;
         }
