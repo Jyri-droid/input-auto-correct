@@ -14,6 +14,12 @@ inputElement.addEventListener("keydown", function onEvent(event) {
     }
 });
 
+inputElement.addEventListener("focusout", function() {
+    console.log("Input has been focused out");
+    refreshStats();
+});
+
+
 function refreshStats() {
     let inputValue = inputElement.value;
 
