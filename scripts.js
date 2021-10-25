@@ -27,11 +27,11 @@ function refreshStats() {
     }
 
     // Correct number if it's too low
-    if (inputValue <= 0 && inputValue !=="") {
+    if (inputValue < stepLeap / 2 && inputValue !=="") {
         console.log("Number is too low");
-        inputElement.value = 1;
-        countStats(1);
-        showNotification("One is the smallest amount");
+        inputElement.value = stepLeap;
+        countStats(stepLeap);
+        showNotification("The amount has been corrected to the minimum batch");
         return;
     }
 
