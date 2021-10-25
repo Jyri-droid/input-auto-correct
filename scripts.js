@@ -62,6 +62,7 @@ function refreshStats() {
     if (inputValue == "") {
         console.log("Input is cleared");
         hideNotification();
+        countStats(0);
         return;
     }
 
