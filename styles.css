@@ -76,7 +76,7 @@ input:focus {
 }
 
 #notificationText {
-    margin-top: .1rem;
+    margin-top: .25rem;
     line-height: 1rem;
     color: lightskyblue;
 }
