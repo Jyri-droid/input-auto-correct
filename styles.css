@@ -15,7 +15,6 @@ body {
     align-items: center;
 }
 
-
 .divider {
     width: 100%;
     height: 1px;
@@ -174,6 +173,16 @@ button:disabled:hover {
     background-color: orangered;
 }
 
+a {
+    color: pink;
+    transition: color 1s;
+}
+
+a:hover {
+    color: darkblue;
+}
+
+
 .modalContainer {
     position: absolute;
     width: 100%;
@@ -233,12 +242,13 @@ h2 {
     margin-top: 1rem;
 }
 
-#restartButton {
+a {
     color: lightskyblue;
+    transition: color .25s;
 }
 
-#restartButton:hover {
-    color: orangered;
+a:hover {
+    color: steelBlue;
 }
 
 @media only screen and (max-width: 600px) {
