@@ -15,12 +15,26 @@ body {
     align-items: center;
 }
 
+.table {
+    text-align: center;
+    border: 1px solid rgb(255,255,255,.2);
+    border-radius: 4px;
+    margin: 0 1rem 0 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.wide {
+    width: 42rem;
+}
+
 .divider {
     width: 100%;
     height: 1px;
     background-color: white;
     opacity: .2;
-    z-index: -1;
+    z-index: 0;
 }
 
 label {
@@ -29,7 +43,7 @@ label {
 
 input {
     height: 3rem;
-    margin-top: .5rem;
+    margin-top: 1.2rem;
     padding: 1rem;
     width: 10rem;
     color: black;
@@ -59,9 +73,8 @@ input:focus {
 
 .notification {
     border-radius: 4px;
-    margin: 1rem 0 .25rem 0;
+    margin: 1rem;
     display: flex;
-    justify-content: center;
     transition: opacity .75s, max-height .75s;
     overflow: hidden;
 }
@@ -69,7 +82,7 @@ input:focus {
 .notificationText {
     font-size: .8rem;
     margin: .75rem 1rem .5rem 0;
-    line-height: 1rem;
+
 }
 
 .neutral {
@@ -173,16 +186,6 @@ button:disabled:hover {
     background-color: orangered;
 }
 
-a {
-    color: pink;
-    transition: color 1s;
-}
-
-a:hover {
-    color: darkblue;
-}
-
-
 .modalContainer {
     position: absolute;
     width: 100%;
@@ -220,18 +223,6 @@ h2 {
 .modal > h2 {
     margin: .5rem 0 .5rem 0;
 
-}
-
-.table {
-    text-align: center;
-    border: 1px solid rgb(255,255,255,.2);
-    border-radius: 4px;
-    margin: 0 1rem 0 1rem;
-}
-
-.wide {
-    margin-top: .5rem;
-    width: 40rem;
 }
 
 .table > p {
