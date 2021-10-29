@@ -1,10 +1,14 @@
-let totalStock = 1200;
-document.getElementById("stockLeft").innerHTML = totalStock;
-let stockPrice = 50;
-let steps = 200;
-let stepLeap = totalStock / steps;
+let stock = 1200;
+let price = 50;
+let batch = 6;
+let steps = stock / batch;
+let stepLeap = stock / steps;
 let notificationElement = document.getElementById("inputNotification");
 let inputElement = document.getElementById("numberInput");
+
+// Render initial values
+document.getElementById("stockLeft").innerHTML = stock;
+document.getElementById("batchSize").innerHTML = batch;
 
 inputElement.addEventListener("keydown", function onEvent(event) {
     if (event.key === "Enter") {
@@ -25,11 +29,11 @@ function refreshStats() {
     let inputValue = inputElement.value;
 
     // Correct number if it's too high
-    if (inputValue > totalStock) {
+    if (inputValue > stock) {
         console.log("Number is too high");
-        inputElement.value = totalStock;
-        countStats(totalStock);
-        showNotification("You can buy maximum " + totalStock + " items");
+        inputElement.value = stock;
+        countStats(stock);
+        showNotification("You can buy maximum " + stock + " items");
         return;
     }
 
@@ -104,8 +108,8 @@ function hideNotification() {
 }
 
 function countStats(value) {
-    document.getElementById("stockLeft").innerHTML = totalStock - value;
-    document.getElementById("totalPrice").innerHTML = value * stockPrice + " &euro;";
+    document.getElementById("stockLeft").innerHTML = stock - value;
+    document.getElementById("totalPrice").innerHTML = value * price;
 }
 
 function checkIfValueDoesNotMatchStep(value) {
@@ -133,7 +137,7 @@ document.getElementById("orderButton").addEventListener("click", function() {
         console.log("Modal opened");
         modalElement.style.display = "flex";
         document.getElementById("order").innerHTML = "Items: " + inputElement.value 
-        document.getElementById("totalPrice").innerHTML = "Total price: " + inputElement.value * stockPrice + " &euro;";
+        document.getElementById("modalTotalPrice").innerHTML = "Total price: " + inputElement.value * price + " &euro;";
     }
 });
 

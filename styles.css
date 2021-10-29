@@ -21,7 +21,6 @@ body {
     height: 1px;
     background-color: white;
     opacity: .2;
-    margin: .75rem 0 .75rem 0;
     z-index: -1;
 }
 
@@ -53,17 +52,15 @@ input:focus {
 }
 
 .loud {
-    font-size: 2rem;
-    margin: 0;
-}
-
-.orange {
+    font-size: 3rem;
+    margin: -1.25rem 0 0 0;
     color: orangered;
+    line-height: 1;
 }
 
 .notification {
     border-radius: 4px;
-    margin: .75rem 0 .25rem 0;
+    margin: 1rem 0 .25rem 0;
     display: flex;
     justify-content: center;
     transition: opacity .75s, max-height .75s;
@@ -82,7 +79,6 @@ input:focus {
 
 .success {
     border: 1px solid lightgreen;
-;
 }
 
 .success .material-icons, .success .notificationText  {
@@ -187,6 +183,7 @@ button:disabled:hover {
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    z-index: 1;
 }
 
 .modal {
@@ -202,6 +199,7 @@ button:disabled:hover {
 
 .buttonRow {
     display: flex;
+    justify-content: center;
     margin: 1rem 1rem .25rem 1rem;
 }
 
@@ -216,16 +214,19 @@ h2 {
 }
 
 .table {
+    text-align: center;
     border: 1px solid rgb(255,255,255,.2);
     border-radius: 4px;
+    margin: 0 1rem 0 1rem;
+}
+
+.wide {
+    margin-top: .5rem;
+    width: 40rem;
 }
 
 .table > p {
     padding: .75rem;
-}
-
-.table > .divider {
-    margin: 0;
 }
 
 .modal .table {
@@ -243,18 +244,23 @@ h2 {
 @media only screen and (max-width: 600px) {
     label {
         display: block;
-        margin-bottom: 1rem;
+        margin-bottom: .5rem;
     }
     form {
         text-align: center;
     }
-    .inputNotification {
+    .notification {
         display: block;
-        margin: .75rem 1rem 0 1rem;
+        width: 25rem;
+        margin: 1.5rem 0 1.5rem 0;
     }
-
     .visible {
         max-height: 5rem;
+    }
+
+    .table {
+        margin-top: 0;
+        width: 25rem;
     }
 
     .material-icons {
@@ -264,10 +270,10 @@ h2 {
         margin: .5rem 0 .5rem 0;
     }
 
-    #notificationText {
+    .notificationText {
         line-height: 1.25;
         display: block;
         text-align: center;
-        margin: -1.5rem 1rem 1rem 1rem;
+        margin: -1.5rem 1rem .5rem 1rem;
     }
 }

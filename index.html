@@ -17,7 +17,7 @@
             <div class="table">
                 <p id="order"></p>
                 <div class="divider"></div>
-                <p id="totalPrice"></p>
+                <p id="modalTotalPrice"></p>
             </div>
             <div class="buttonRow">
                 <button class="secondary" id="cancelButton"><span class="buttonText">Cancel</span><span class="material-icons">close</span></button>
@@ -39,15 +39,18 @@
         <span class="material-icons">info</span>&nbsp;<span class="notificationText" id="notificationText"></span>
     </div>
 
-    <div class="divider"></div>
-    <p>Items left</p>
-    <p class="loud" id="stockLeft"></p>
-    <div class="divider"></div>
-    <p>Price per item</p>
-    <p class="loud">50&nbsp;&euro;</p>
-    <div class="divider"></div>
-    <p>Total price</p>
-    <p class="loud orange" id="totalPrice">0 &euro;</p>
+    <div class="table wide">
+        <p>Items left: <span id="stockLeft"></span></p>
+        <div class="divider"></div>
+        <p>Batch size: <span id="batchSize"></span></p>
+        <div class="divider"></div>
+        <p>Price per item: 50&nbsp;&euro;</p>
+        <div class="divider"></div>
+        <p>Total price</p>
+        <p class="loud"><span class="loud" id="totalPrice">0</span>&#8239;&euro;</p>
+        <div class="divider"></div>
+    </div>
+
     <button id="orderButton"><span class="buttonText">Send order&nbsp;</span><span class="material-icons">send</span></button>
 
     <a href="index.html" id="restartButton" hidden>Restart</a>
