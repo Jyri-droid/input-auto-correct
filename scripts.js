@@ -9,6 +9,8 @@ let inputElement = document.getElementById("numberInput");
 // Render initial values
 document.getElementById("stockLeft").innerHTML = stock;
 document.getElementById("batchSize").innerHTML = batch;
+document.getElementById("batchButtonPlusText").innerHTML = batch;
+document.getElementById("batchButtonMinusText").innerHTML = batch;
 
 inputElement.addEventListener("keydown", function onEvent(event) {
     if (event.key === "Enter") {
@@ -32,7 +34,7 @@ function refreshStats() {
     if (inputValue > stock) {
         console.log("Number is too high");
         inputElement.value = stock;
-        countStats(stock);
+        updateStats(stock);
         showNotification("You can buy maximum " + stock + " items");
         return;
     }
@@ -41,7 +43,7 @@ function refreshStats() {
     if (inputValue < stepLeap / 2 && inputValue !=="") {
         console.log("Number is too low");
         inputElement.value = stepLeap;
-        countStats(stepLeap);
+        updateStats(stepLeap);
         showNotification("The amount has been corrected to the minimum batch");
         return;
     }
@@ -59,10 +61,10 @@ function refreshStats() {
                 // Check if input value is bigger than middle of step
                 if (inputValue >= middleOfStep) {
                     inputElement.value = stepLeap * (i + 1);
-                    countStats(stepLeap * (i + 1));
+                    updateStats(stepLeap * (i + 1));
                 } else {
                     inputElement.value = stepLeap * i;
-                    countStats(stepLeap * i);
+                    updateStats(stepLeap * i);
                 }  
             }
         }
@@ -73,7 +75,7 @@ function refreshStats() {
     if (inputValue == "") {
         console.log("Input is cleared");
         hideNotification();
-        countStats(0);
+        updateStats(0);
         return;
     }
 
@@ -83,7 +85,7 @@ function refreshStats() {
         hideNotification();
     }
 
-    countStats(inputValue);
+    updateStats(inputValue);
 }
 
 function showNotification(text) {
@@ -107,7 +109,7 @@ function hideNotification() {
     notificationElement.classList.replace("visible", "hidden");
 }
 
-function countStats(value) {
+function updateStats(value) {
     document.getElementById("stockLeft").innerHTML = stock - value;
     document.getElementById("totalPrice").innerHTML = value * price;
 }
@@ -121,6 +123,27 @@ function checkIfValueDoesNotMatchStep(value) {
     }
     return true;
 }
+
+// Batch steppers
+document.getElementById("batchButtonPlus").addEventListener("click", function() {
+    console.log("Batch added")
+    let inputValue2 = inputElement.value;
+    if (inputValue2 < stock) {
+        inputElement.value = Math.floor(inputValue2) + batch;
+        updateStats(inputElement.value);
+    }
+});
+
+document.getElementById("batchButtonMinus").addEventListener("click", function() {
+    console.log("Batch added")
+    let inputValue2 = inputElement.value;
+    if (inputValue2 > 0) {
+        inputElement.value = Math.floor(inputValue2) - batch;
+        updateStats(inputElement.value);
+    }
+});
+
+
 
 // Send order button
 
