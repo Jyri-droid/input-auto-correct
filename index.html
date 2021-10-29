@@ -26,8 +26,10 @@
         </div>
     </div>
 
-    <div class="notification success hidden" id="orderSentNotification">
-        <span class="material-icons">check_circle</span>&nbsp;<span class="notificationText">Your order has been sent successfully.</span>
+    <div class="notification hidden" id="orderSentNotification">
+        <div class="notificationBox success">
+            <span class="material-icons">check_circle</span>&nbsp;<span class="notificationText">Your order has been sent successfully.</span>
+        </div>
     </div>
 
     <div class="table wide">
@@ -36,9 +38,14 @@
             <label for="numberInput">How many items would you like to buy?</label>
             <input type="number" placeholder="Enter amount" id="numberInput" name="numberInput" autofocus></input><span style="margin-left:0.75rem;">pcs</span>
         </form>
-        <div class="notification neutral hidden" id="inputNotification">
-            <span class="material-icons">info</span>&nbsp;<span class="notificationText" id="notificationText"></span>
+
+        <div class="notification hidden" id="inputNotification">
+            <div class="notificationBox neutral">
+                <span class="material-icons">info</span>&nbsp;<span class="notificationText" id="notificationText"></span>
+            </div>
         </div>
+
+
         <div class="divider"></div>
 
         <p>Items left: <span id="stockLeft"></span></p>
