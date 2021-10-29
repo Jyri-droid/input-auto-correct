@@ -1,8 +1,9 @@
-let totalStock = 120;
+let totalStock = 1200;
+document.getElementById("stockLeft").innerHTML = totalStock;
 let stockPrice = 50;
-let steps = 6;
+let steps = 200;
 let stepLeap = totalStock / steps;
-let notificationElement = document.getElementById("notification");
+let notificationElement = document.getElementById("inputNotification");
 let inputElement = document.getElementById("numberInput");
 
 inputElement.addEventListener("keydown", function onEvent(event) {
@@ -73,7 +74,7 @@ function refreshStats() {
     }
 
     // Number is good but notification is showing, hide it
-    if (notificationElement.style.opacity !== 0) {
+    if (notificationElement.classList.contains("visible")) {
         console.log("Notification was showing but now it's hidden");
         hideNotification();
     }
@@ -82,25 +83,24 @@ function refreshStats() {
 }
 
 function showNotification(text) {
-    console.log("Notification is shown");
-    if (notificationElement.style.opacity == 0) {
-        console.log("Previous notification was hidden");
+    console.log("Notification is shown...");
+    if (notificationElement.classList.contains("hidden")) {
+        console.log("...and previous notification was hidden");
         document.getElementById("notificationText").innerHTML = text;
-        notificationElement.style.opacity = 1;
+        notificationElement.classList.replace("hidden", "visible");
     } else {
-        console.log("Previous notification was shown");
-        notificationElement.style.opacity = .5;
+        console.log("...and previous notification was shown");
+        notificationElement.classList.replace("visible", "hidden");
         setTimeout(function() {
             document.getElementById("notificationText").innerHTML = text;
-            notificationElement.style.opacity = 1;
+            notificationElement.classList.replace("hidden", "visible");
         }, 200);
     }
-
 }
 
 function hideNotification() {
     console.log("Notification is hidden");
-    notificationElement.style.opacity = 0;
+    notificationElement.classList.replace("visible", "hidden");
 }
 
 function countStats(value) {
@@ -117,3 +117,42 @@ function checkIfValueDoesNotMatchStep(value) {
     }
     return true;
 }
+
+// Send order button
+
+let modalElement = document.getElementById("modalContainer");
+let cancelButtonElement = document.getElementById("cancelButton");
+let modalSendButtonElement = document.getElementById("modalSendButton");
+
+document.getElementById("orderButton").addEventListener("click", function() {
+    console.log("Send order button pressed");
+    if (inputElement.value == "") {
+        console.log("Can't send order, input is empty");
+        showNotification("Please enter amount of items first.");
+    } else {
+        console.log("Modal opened");
+        modalElement.style.display = "flex";
+        document.getElementById("order").innerHTML = "Items: " + inputElement.value 
+        document.getElementById("totalPrice").innerHTML = "Total price: " + inputElement.value * stockPrice + " &euro;";
+    }
+});
+
+// Confirmation modal
+
+// Hide modal upon cancel
+cancelButtonElement.addEventListener("click", function() {
+    console.log("Modal cancel button pressed");
+    modalElement.style.display = "none";
+});
+
+// Send button pressed after check
+modalSendButtonElement.addEventListener("click", function() {
+    console.log("Modal send button pressed...");
+    modalElement.style.display = "none";
+    document.getElementById("orderSentNotification").classList.replace("hidden", "visible");
+    // Disable send button and input
+    document.getElementById("orderButton").disabled = true;
+    inputElement.disabled = true;
+    // Show restart button
+    document.getElementById("restartButton").hidden = false;
+});

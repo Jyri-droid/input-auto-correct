@@ -6,27 +6,52 @@
     <link rel="stylesheet" type="text/css" href="styles.css" media="screen"/>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Work+Sans&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;600&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
 <body>
+
+    <div class="modalContainer" id="modalContainer" style="display:none;">
+        <div class="modal">
+            <h2>Please check your order</h2>
+            <div class="table">
+                <p id="order"></p>
+                <div class="divider"></div>
+                <p id="totalPrice"></p>
+            </div>
+            <div class="buttonRow">
+                <button class="secondary" id="cancelButton"><span class="buttonText">Cancel</span><span class="material-icons">close</span></button>
+                <button><span class="buttonText" id="modalSendButton">Send order</span><span class="material-icons">send</span></button>
+            </div>
+        </div>
+    </div>
+
+    <div class="notification success hidden" id="orderSentNotification">
+        <span class="material-icons">check_circle</span>&nbsp;<span class="notificationText">Your order has been sent successfully.</span>
+    </div>
 
     <form action="">
         <label for="numberInput">How many items would you like to buy?</label>
         <input type="number" placeholder="Enter amount" id="numberInput" name="numberInput" autofocus></input><span style="margin-left:0.75rem;">pcs</span>
     </form>
-    <div class="inputNotification" id="notification" style="opacity:0;">
-        <span class="material-icons">info</span>&nbsp;<span id="notificationText"></span>
+
+    <div class="notification neutral hidden" id="inputNotification">
+        <span class="material-icons">info</span>&nbsp;<span class="notificationText" id="notificationText"></span>
     </div>
+
     <div class="divider"></div>
     <p>Items left</p>
-    <p class="loud" id="stockLeft">120</p>
+    <p class="loud" id="stockLeft"></p>
     <div class="divider"></div>
     <p>Price per item</p>
     <p class="loud">50&nbsp;&euro;</p>
     <div class="divider"></div>
     <p>Total price</p>
     <p class="loud orange" id="totalPrice">0 &euro;</p>
+    <button id="orderButton"><span class="buttonText">Send order&nbsp;</span><span class="material-icons">send</span></button>
+
+    <a href="index.html" id="restartButton" hidden>Restart</a>
+
 </body>
 <script src="scripts.js"></script>
 </html>

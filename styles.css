@@ -2,15 +2,14 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Work Sans', sans-serif;
-    font-weight: 300;
+    font-family: "Work Sans", sans-serif;
+    font-weight: 400;
     font-size: 16px;
     color: lightgrey;
 }
 
 body {
     background-color: black;
-    margin-top: 2rem;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -22,7 +21,8 @@ body {
     height: 1px;
     background-color: white;
     opacity: .2;
-    margin: 1rem 0 1rem 0;
+    margin: .75rem 0 .75rem 0;
+    z-index: -1;
 }
 
 label {
@@ -31,6 +31,7 @@ label {
 
 input {
     height: 3rem;
+    margin-top: .5rem;
     padding: 1rem;
     width: 10rem;
     color: black;
@@ -45,13 +46,14 @@ input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
 }
 
 input:focus {
-    border: solid 2px orangered;
+    border: solid 4px lightsalmon;
     outline: none;
     border-radius: 2px;
+    cursor: text;
 }
 
 .loud {
-    font-size: 3rem;
+    font-size: 2rem;
     margin: 0;
 }
 
@@ -59,13 +61,50 @@ input:focus {
     color: orangered;
 }
 
-.inputNotification {
-    margin: 1rem 0 0 0;
-    padding: 0 1rem 0 1rem;
-    color: white;
-    height: 2rem;
+.notification {
+    border-radius: 4px;
+    margin: .75rem 0 .25rem 0;
     display: flex;
-    transition: opacity .5s;
+    justify-content: center;
+    transition: opacity .75s, max-height .75s;
+    overflow: hidden;
+}
+
+.notificationText {
+    font-size: .8rem;
+    margin: .75rem 1rem .5rem 0;
+    line-height: 1rem;
+}
+
+.neutral {
+    border: 1px solid lightskyblue;
+}
+
+.success {
+    border: 1px solid lightgreen;
+;
+}
+
+.success .material-icons, .success .notificationText  {
+    color: lightgreen;
+}
+
+.neutral .material-icons, .neutral .notificationText  {
+    color: lightskyblue;
+}
+
+.success .notification {
+    margin-top: 1.5rem;
+}
+
+.hidden {
+    max-height: 0;
+    opacity: 0;
+}
+
+.visible {
+    max-height: 5rem;
+    opacity: 1;
 }
 
 .material-icons {
@@ -75,12 +114,130 @@ input:focus {
     line-height: 1rem;
     font-size: 1.5rem;
     color: lightskyblue;
+    margin: .5rem 0 0.5rem 1rem;
 }
 
-#notificationText {
-    margin-top: .25rem;
-    line-height: 1rem;
+button {
+    border: none;
+    background-color: orangered;
+    padding: 1rem 1.5rem 1rem 1.5rem;
+    border-radius: 30px;
+    margin: 1rem 0 1rem 0;
+    transition: background-color .25s;
+    display: flex;
+    justify-content: center;
+}
+
+button.secondary {
+    background-color: transparent;
+    border: 2px solid grey;
+}
+
+button.secondary:hover {
+    background-color: transparent;
+    border: 2px solid rgb(50,50,50);
+}
+
+button > .material-icons {
+    margin: 0;
+    padding: 0;
+    color: black;
+}
+
+.buttonText {
+    color: black;
+    font-weight: 600;
+    line-height: 1;
+    white-space: nowrap;
+    margin: .25rem;
+}
+
+.secondary .buttonText {
+    color: lightgrey;
+}
+
+.secondary .material-icons {
+    color: lightgrey;
+}
+
+button:hover {
+    cursor: pointer;
+    background-color: darkred;
+}
+    
+button:focus {
+    outline: 4px solid lightsalmon;
+}
+
+button:disabled {
+    opacity: .25;
+}
+
+button:disabled:hover {
+    cursor: auto;
+    background-color: orangered;
+}
+
+.modalContainer {
+    position: absolute;
+    width: 100%;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.9);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal {
+    background-color: rgb(30,30,30);
+    padding: 1rem;
+    border-radius: 6px;
+    text-align: center;
+}
+
+.modal button {
+    margin: .25rem;
+}
+
+.buttonRow {
+    display: flex;
+    margin: 1rem 1rem .25rem 1rem;
+}
+
+h2 {
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+
+.modal > h2 {
+    margin: .5rem 0 .5rem 0;
+
+}
+
+.table {
+    border: 1px solid rgb(255,255,255,.2);
+    border-radius: 4px;
+}
+
+.table > p {
+    padding: .75rem;
+}
+
+.table > .divider {
+    margin: 0;
+}
+
+.modal .table {
+    margin-top: 1rem;
+}
+
+#restartButton {
     color: lightskyblue;
+}
+
+#restartButton:hover {
+    color: orangered;
 }
 
 @media only screen and (max-width: 600px) {
@@ -93,20 +250,24 @@ input:focus {
     }
     .inputNotification {
         display: block;
-        margin-bottom: 2rem;
+        margin: .75rem 1rem 0 1rem;
     }
+
+    .visible {
+        max-height: 5rem;
+    }
+
     .material-icons {
         display: block;
         width: 100%;
         text-align: center;
-        margin: -0.25rem 0 0 0;
-        padding: 0;
+        margin: .5rem 0 .5rem 0;
     }
+
     #notificationText {
-        margin: -1.25rem 0 0 0;
-        padding: 0 0 2rem 0;
         line-height: 1.25;
         display: block;
         text-align: center;
+        margin: -1.5rem 1rem 1rem 1rem;
     }
 }
