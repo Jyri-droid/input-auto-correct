@@ -178,7 +178,10 @@ modalSendButtonElement.addEventListener("click", function() {
     modalElement.style.display = "none";
     document.getElementById("orderSentNotification").classList.replace("hidden", "visible");
     // Disable send button and input
-    document.getElementById("orderButton").disabled = true;
+    let allButtons = document.getElementsByTagName("button");
+    for (let j of allButtons) {
+        j.disabled = true;
+    }
     inputElement.disabled = true;
     // Show restart button
     document.getElementById("restartButton").hidden = false;
