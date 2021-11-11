@@ -130,6 +130,7 @@ document.getElementById("batchButtonPlus").addEventListener("click", function() 
     let inputValue2 = inputElement.value;
     if (inputValue2 < stock) {
         inputElement.value = Math.floor(inputValue2) + batch;
+        hideNotification();
         updateStats(inputElement.value);
     }
 });
@@ -139,6 +140,7 @@ document.getElementById("batchButtonMinus").addEventListener("click", function()
     let inputValue2 = inputElement.value;
     if (inputValue2 > 0) {
         inputElement.value = Math.floor(inputValue2) - batch;
+        hideNotification();
         updateStats(inputElement.value);
     }
 });
